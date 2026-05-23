@@ -1,0 +1,40 @@
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  background-image: url("https://www.psdgraphics.com/wp-content/uploads/2022/01/white-math-paper-texture.jpg");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.paper {
+  position: absolute;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  transform: rotate(-5deg);
+  cursor: grab;
+  font-family: 'Zeyada', cursive;
+}
+
+.paper.image img {
+  width: 200px;
+  display: block;
+  margin-top: 10px;
+}
+
+.paper.heart {
+  width: 120px;
+  height: 120px;
+  background: pink;
+  border-radius: 50%;
+}
+
+.paper.red {
+  background: #ffdddd;
+}
+
+p {
+  font-size: 24px;
+}
