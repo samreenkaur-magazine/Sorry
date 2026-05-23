@@ -3,36 +3,46 @@ let highestZ = 1;
 class Paper {
   constructor(el) {
     this.el = el;
+
+    this.isDragging = false;
+    this.offsetX = 0;
+    this.offsetY = 0;
+
     this.x = 0;
     this.y = 0;
-    this.holding = false;
 
-    el.addEventListener("mousedown", (e) => this.start(e));
-    window.addEventListener("mousemove", (e) => this.move(e));
-    window.addEventListener("mouseup", () => this.end());
+    el.addEventListener("mousedown", (e) => this.startDrag(e));
+    window.addEventListener("mousemove", (e) => this.drag(e));
+    window.addEventListener("mouseup", () => this.stopDrag());
   }
 
-  start(e) {
-    this.holding = true;
+  startDrag(e) {
+    this.isDragging = true;
+
     this.el.style.zIndex = highestZ++;
-    this.offsetX = e.clientX - this.x;
-    this.offsetY = e.clientY - this.y;
+
+    const rect = this.el.getBoundingClientRect();
+
+    this.offsetX = e.clientX - rect.left;
+    this.offsetY = e.clientY - rect.top;
   }
 
-  move(e) {
-    if (!this.holding) return;
+  drag(e) {
+    if (!this.isDragging) return;
 
     this.x = e.clientX - this.offsetX;
     this.y = e.clientY - this.offsetY;
 
-    this.el.style.transform = `translate(${this.x}px, ${this.y}px) rotate(-5deg)`;
+    this.el.style.left = this.x + "px";
+    this.el.style.top = this.y + "px";
   }
 
-  end() {
-    this.holding = false;
+  stopDrag() {
+    this.isDragging = false;
   }
 }
 
 document.querySelectorAll(".paper").forEach(el => {
+  el.style.position = "absolute"; // IMPORTANT FIX
   new Paper(el);
 });
